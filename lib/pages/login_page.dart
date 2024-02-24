@@ -14,7 +14,7 @@ class LoginPage extends StatelessWidget {
       return "El usuario no existe";
     } else if (erroMessage.contains("invalid-email")) {
       return "El correo no es válido";
-    } else if (erroMessage.contains("wrong-password")) {
+    } else if (erroMessage.contains("invalid-credential")) {
       return "Contraseña incorrecta";
     } else {
       return "Ocurrió un error al iniciar sesión";
@@ -41,6 +41,7 @@ class LoginPage extends StatelessWidget {
       );
       // return userCredential;
     } catch (e) {
+      print(e.toString());
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: Colors.red,
