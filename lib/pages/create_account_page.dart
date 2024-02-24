@@ -1,7 +1,10 @@
 import 'package:firebaseconn2g7/constants/constants.dart';
+import 'package:firebaseconn2g7/widgets/field_form_widget.dart';
 import 'package:flutter/material.dart';
 
 class CreateAccountPage extends StatelessWidget {
+  TextEditingController correoController = TextEditingController();
+  TextEditingController contrasenaController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -44,29 +47,13 @@ class CreateAccountPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Correo electrónico",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Container(
-                      height: 60,
-                      child: TextField(
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white.withOpacity(0.08),
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 14),
-                          focusedBorder: borderFormStyle,
-                          enabledBorder: borderFormStyle,
-                        ),
-                      ),
-                    )
+                    FieldFormWidget(
+                        text: "Ingresa el correo",
+                        controller: correoController),
+                    FieldFormWidget(
+                        text: "Ingresa la contraseña",
+                        controller: contrasenaController),
                   ],
                 ),
               ),
