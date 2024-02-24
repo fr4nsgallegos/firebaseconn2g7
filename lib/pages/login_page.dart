@@ -1,36 +1,44 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebaseconn2g7/constants/constants.dart';
-import 'package:firebaseconn2g7/pages/login_page.dart';
 import 'package:firebaseconn2g7/widgets/field_form_widget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class CreateAccountPage extends StatelessWidget {
+class LoginPage extends StatelessWidget {
   TextEditingController correoController = TextEditingController();
   TextEditingController contrasenaController = TextEditingController();
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-
   String mapErrorAuth(String erroMessage) {
-    if (erroMessage.contains('email-already-in-use')) {
-      return "La dirección de correo ya esta en uso";
+    if (erroMessage.contains('user-not-found')) {
+      return "El usuario no existe";
     } else if (erroMessage.contains("invalid-email")) {
       return "El correo no es válido";
-    } else if (erroMessage.contains("weak-password")) {
-      return "La contraseña no cumple con los estándares";
+    } else if (erroMessage.contains("wrong-password")) {
+      return "Contraseña incorrecta";
     } else {
-      return "Ocurrió un error al crear la cuenta";
+      return "Ocurrió un error al iniciar sesión";
     }
   }
 
-  Future<void> createAccount(BuildContext context) async {
+  Future<void> loginAccount(BuildContext context) async {
     try {
       UserCredential userCredential =
-          await _firebaseAuth.createUserWithEmailAndPassword(
+          await _firebaseAuth.signInWithEmailAndPassword(
         email: correoController.text,
         password: contrasenaController.text,
       );
       print(userCredential.user);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.green,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(26),
+          ),
+          behavior: SnackBarBehavior.floating,
+          content: Text("Ya inició sesión"),
+        ),
+      );
       // return userCredential;
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -83,7 +91,7 @@ class CreateAccountPage extends StatelessWidget {
                   height: 20,
                 ),
                 Text(
-                  "Crear una cuenta",
+                  "Inicia sesión",
                   style: subTitleStyle,
                 ),
                 SizedBox(
@@ -103,41 +111,31 @@ class CreateAccountPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 8),
-                // Text(
-                //   "Si ya tienes una cuenta: Inicia sesión",
-                //   style: TextStyle(
-                //     color: Colors.white,
+
+                // RichText(
+                //   text: TextSpan(
+                //     text: "Si ya tienes una cuenta:  ",
+                //     children: [
+                //       TextSpan(
+                //         text: "Inicia sesión",
+                //         style: TextStyle(
+                //             fontWeight: FontWeight.bold,
+                //             color: Colors.blue,
+                //             fontSize: 20),
+                //         recognizer: TapGestureRecognizer()
+                //           ..onTap = () {
+                //             print("holaaa");
+                //           },
+                //       ),
+                //     ],
                 //   ),
                 // ),
-                RichText(
-                  text: TextSpan(
-                    text: "Si ya tienes una cuenta:  ",
-                    children: [
-                      TextSpan(
-                        text: "Inicia sesión",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue,
-                            fontSize: 20),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LoginPage(),
-                              ),
-                            );
-                          },
-                      ),
-                    ],
-                  ),
-                ),
                 SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () {
-                    createAccount(context);
+                    loginAccount(context);
                   },
-                  child: Text("Crear cuenta"),
+                  child: Text("Iniciar sesión"),
                 ),
               ],
             ),
