@@ -1,44 +1,36 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebaseconn2g7/constants/constants.dart';
+import 'package:firebaseconn2g7/pages/home_page.dart';
 import 'package:firebaseconn2g7/widgets/field_form_widget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatelessWidget {
   TextEditingController correoController = TextEditingController();
   TextEditingController contrasenaController = TextEditingController();
+  GoogleSignIn googleSignIn = GoogleSignIn();
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  String mapErrorAuth(String erroMessage) {
-    if (erroMessage.contains('user-not-found')) {
-      return "El usuario no existe";
-    } else if (erroMessage.contains("invalid-email")) {
-      return "El correo no es válido";
-    } else if (erroMessage.contains("invalid-credential")) {
-      return "Contraseña incorrecta";
-    } else {
-      return "Ocurrió un error al iniciar sesión";
-    }
-  }
 
   Future<void> loginAccount(BuildContext context) async {
     try {
-      UserCredential userCredential =
-          await _firebaseAuth.signInWithEmailAndPassword(
+      _firebaseAuth
+          .signInWithEmailAndPassword(
         email: correoController.text,
         password: contrasenaController.text,
-      );
-      print(userCredential.user);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.green,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(26),
+      )
+          .then((value) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(),
           ),
-          behavior: SnackBarBehavior.floating,
-          content: Text("Ya inició sesión"),
-        ),
-      );
+        );
+      });
+
       // return userCredential;
     } catch (e) {
       print(e.toString());
@@ -50,8 +42,36 @@ class LoginPage extends StatelessWidget {
           ),
           behavior: SnackBarBehavior.floating,
           content: Text(
-            mapErrorAuth(e.toString()),
+            e.toString(),
           ),
+        ),
+      );
+    }
+  }
+
+  Future<void> signInWithGoogle(BuildContext context) async {
+    try {
+      GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+      GoogleSignInAuthentication? googleSignInAuthentication =
+          await googleSignInAccount?.authentication;
+      AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication?.accessToken,
+        idToken: googleSignInAuthentication?.idToken,
+      );
+
+      User? user =
+          (await FirebaseAuth.instance.signInWithCredential(credential)).user;
+      print(user?.displayName);
+      print(user?.email);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(26),
+          ),
+          behavior: SnackBarBehavior.floating,
+          content: Text(e.toString()),
         ),
       );
     }
@@ -112,25 +132,28 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 8),
-
-                // RichText(
-                //   text: TextSpan(
-                //     text: "Si ya tienes una cuenta:  ",
-                //     children: [
-                //       TextSpan(
-                //         text: "Inicia sesión",
-                //         style: TextStyle(
-                //             fontWeight: FontWeight.bold,
-                //             color: Colors.blue,
-                //             fontSize: 20),
-                //         recognizer: TapGestureRecognizer()
-                //           ..onTap = () {
-                //             print("holaaa");
-                //           },
-                //       ),
-                //     ],
-                //   ),
-                // ),
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Ó inicia sesión con    "),
+                      IconButton(
+                        color: Colors.white,
+                        onPressed: () {
+                          signInWithGoogle(context).then((value) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HomePage(),
+                              ),
+                            );
+                          });
+                        },
+                        icon: Icon(Icons.g_mobiledata),
+                      )
+                    ],
+                  ),
+                ),
                 SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () {
