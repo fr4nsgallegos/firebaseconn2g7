@@ -12,7 +12,7 @@ void main() async {
   );
   runApp(
     MaterialApp(
-      home: HomePage(),
+      home: StreamPage(),
       debugShowCheckedModeBanner: false,
     ),
   );

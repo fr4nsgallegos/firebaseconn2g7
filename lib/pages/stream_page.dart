@@ -87,65 +87,61 @@ class _StreamPageState extends State<StreamPage> {
         },
         child: Text("Emitir"),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            StreamBuilder(
-              stream: myIntStreamController.stream,
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  return Text(
-                    "STREAM1-W1: ${snapshot.data.toString()}",
-                    style: TextStyle(fontSize: 40),
-                  );
-                }
-                return Text(
-                  "0",
-                  style: TextStyle(fontSize: 40),
-                );
-              },
-            ),
-            StreamBuilder(
-              stream: myIntStreamController.stream,
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  return Text(
-                    "STREAM1-W2: ${snapshot.data.toString()}",
-                    style: TextStyle(fontSize: 40),
-                  );
-                }
-                return Text(
-                  "0",
-                  style: TextStyle(fontSize: 40),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-      // body: StreamBuilder(
-      //     stream: FirebaseFirestore.instance.collection("products").snapshots(),
-      //     builder: (context, snapshot) {
-      //       if (snapshot.hasData) {
-      //         return ListView.builder(
-      //             itemCount: snapshot.data!.docs.length,
-      //             itemBuilder: (context, index) {
-      //               DocumentSnapshot doc = snapshot.data!.docs[index];
-      //               return Container(
-      //                 alignment: Alignment.center,
-      //                 height: 30,
-      //                 width: MediaQuery.of(context).size.width,
-      //                 decoration: BoxDecoration(
-      //                     borderRadius: BorderRadius.circular(20),
-      //                     color: Colors.blueAccent),
-      //                 child: Text(doc["name"]),
-      //               );
-      //             });
-      //       } else {
-      //         return Text("No data");
-      //       }
-      //     }),
+
+      //EMISION DE STREAMS EN 2 WIDGETS
+      // body: Center(
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       StreamBuilder(
+      //         stream: myIntStreamController.stream,
+      //         builder: (BuildContext context, AsyncSnapshot snapshot) {
+      //           if (snapshot.hasData) {
+      //             return Text(
+      //               "STREAM1-W1: ${snapshot.data.toString()}",
+      //               style: TextStyle(fontSize: 40),
+      //             );
+      //           }
+      //           return Text(
+      //             "0",
+      //             style: TextStyle(fontSize: 40),
+      //           );
+      //         },
+      //       ),
+      //       StreamBuilder(
+      //         stream: myIntStreamController.stream,
+      //         builder: (BuildContext context, AsyncSnapshot snapshot) {
+      //           if (snapshot.hasData) {
+      //             return Text(
+      //               "STREAM1-W2: ${snapshot.data.toString()}",
+      //               style: TextStyle(fontSize: 40),
+      //             );
+      //           }
+      //           return Text(
+      //             "0",
+      //             style: TextStyle(fontSize: 40),
+      //           );
+      //         },
+      //       ),
+      //     ],
+      //   ),
+      // ),
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection("products").snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    DocumentSnapshot doc = snapshot.data!.docs[index];
+                    return ListTile(
+                      title: Text(doc["name"]),
+                    );
+                  });
+            } else {
+              return Text("No data");
+            }
+          }),
       // STREAM BUILDER
       // body: StreamBuilder(
       //   stream: counter(),
