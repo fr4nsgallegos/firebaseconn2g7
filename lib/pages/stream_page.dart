@@ -30,6 +30,40 @@ class StreamPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Stream Page"),
       ),
+      //STREAM BUILDER
+      body: StreamBuilder(
+        stream: counter(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            return Center(
+              child: Text(
+                snapshot.data.toString(),
+                style: TextStyle(fontSize: 40),
+              ),
+            );
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      ),
+      //FUTURE BUILDER
+      // body: FutureBuilder(
+      //   future: getNumber(),
+      //   builder: (BuildContext context, AsyncSnapshot snap) {
+      //     if (snap.hasData) {
+      //       return Center(
+      //         child: Text(
+      //           snap.data.toString(),
+      //           style: TextStyle(fontSize: 40),
+      //         ),
+      //       );
+      //     }
+      //     return Center(
+      //       child: CircularProgressIndicator(),
+      //     );
+      //   },
+      // ),
     );
   }
 }
