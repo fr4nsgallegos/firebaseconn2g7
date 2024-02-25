@@ -25,9 +25,13 @@ class StreamPage extends StatelessWidget {
     print("Init strem");
     Stream<int> myStream = Stream.fromFuture(getNumber());
     print("Stream creado");
-    myStream.listen((value) {
+    counter().listen((value) {
       print("Valor del Stream");
       print(value);
+    }, onDone: () {
+      print("FINALIZADO");
+    }, onError: (error) {
+      print("ERRRRORRRRR");
     });
     // //OBTENCIÓN DE VALOR EN FUTURE
     // getNumber().then((value) {
