@@ -8,7 +8,7 @@ class StreamPage extends StatelessWidget {
       FirebaseFirestore.instance.collection("products");
 
   StreamController<String> myStreamController = StreamController();
-  StreamController<int> myIntStreamController = StreamController();
+  StreamController<int> myIntStreamController = StreamController.broadcast();
 
   int myCounter = 0;
   Stream<int> counter() async* {
@@ -32,8 +32,11 @@ class StreamPage extends StatelessWidget {
     // Stream<int> myStream = Stream.fromFuture(getNumber());
     // print("Stream creado");
 
+    /////////////////INIT STREAM CONTROLLER 1
     Timer.periodic(Duration(seconds: 2), (timer) {
-      myStreamController.add('Nuevo evento: ${DateTime.now()}');
+      if (!myStreamController.isClosed) {
+        myStreamController.add('Nuevo evento: ${DateTime.now()}');
+      }
     });
     myStreamController.stream.listen((value) {
       print("Valor del Stream");
@@ -47,6 +50,8 @@ class StreamPage extends StatelessWidget {
     Future.delayed(Duration(seconds: 10), () {
       myStreamController.close();
     });
+    /////////////////FINISH STREAM CONTROLLER 1
+
     // //OBTENCIÓN DE VALOR EN FUTURE
     // getNumber().then((value) {
     //   print(value);
@@ -69,26 +74,42 @@ class StreamPage extends StatelessWidget {
         child: Text("Emitir"),
       ),
       body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          StreamBuilder(
-            stream: myIntStreamController.stream,
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            StreamBuilder(
+              stream: myIntStreamController.stream,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  return Text(
+                    "STREAM1-W1: ${snapshot.data.toString()}",
+                    style: TextStyle(fontSize: 40),
+                  );
+                }
                 return Text(
-                  snapshot.data.toString(),
+                  "0",
                   style: TextStyle(fontSize: 40),
                 );
-              }
-              return Text(
-                "0",
-                style: TextStyle(fontSize: 40),
-              );
-            },
-          ),
-        ],
-      )),
+              },
+            ),
+            StreamBuilder(
+              stream: myIntStreamController.stream,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  return Text(
+                    "STREAM1-W2: ${snapshot.data.toString()}",
+                    style: TextStyle(fontSize: 40),
+                  );
+                }
+                return Text(
+                  "0",
+                  style: TextStyle(fontSize: 40),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
       // body: StreamBuilder(
       //     stream: FirebaseFirestore.instance.collection("products").snapshots(),
       //     builder: (context, snapshot) {
