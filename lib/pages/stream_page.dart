@@ -10,8 +10,22 @@ class StreamPage extends StatelessWidget {
     }
   }
 
+  Future<int> getNumber() async {
+    return 10;
+  }
+
   @override
   Widget build(BuildContext context) {
+    //OBTENCIÓN DE VALOR EN FUTURE
+    getNumber().then((value) {
+      print(value);
+    });
+    //OBTENCIÓN DE VALOR EN STREAM
+    counter().listen(
+      (event) {
+        print(event);
+      },
+    );
     return Scaffold(
       appBar: AppBar(
         title: Text("Stream Page"),
