@@ -1,13 +1,11 @@
-import 'dart:math';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebaseconn2g7/constants/constants.dart';
 import 'package:firebaseconn2g7/pages/home_page.dart';
 import 'package:firebaseconn2g7/widgets/field_form_widget.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+// ignore: must_be_immutable
 class LoginPage extends StatelessWidget {
   TextEditingController correoController = TextEditingController();
   TextEditingController contrasenaController = TextEditingController();

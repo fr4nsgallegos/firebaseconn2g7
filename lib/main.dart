@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebaseconn2g7/firebase_options.dart';
 import 'package:firebaseconn2g7/pages/create_account_page.dart';
 import 'package:firebaseconn2g7/pages/home_page.dart';
+import 'package:firebaseconn2g7/pages/stream_page.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -11,7 +12,7 @@ void main() async {
   );
   runApp(
     MaterialApp(
-      home: CreateAccountPage(),
+      home: StreamPage(),
       debugShowCheckedModeBanner: false,
     ),
   );

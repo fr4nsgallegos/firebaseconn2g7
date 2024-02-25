@@ -5,6 +5,7 @@ import 'package:firebaseconn2g7/widgets/field_form_widget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CreateAccountPage extends StatelessWidget {
   TextEditingController correoController = TextEditingController();
   TextEditingController contrasenaController = TextEditingController();
