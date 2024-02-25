@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -5,6 +7,10 @@ class StreamPage extends StatelessWidget {
   CollectionReference productsReference =
       FirebaseFirestore.instance.collection("products");
 
+  StreamController<String> myStreamController = StreamController();
+  StreamController<int> myIntStreamController = StreamController();
+
+  int myCounter = 0;
   Stream<int> counter() async* {
     for (int i = 0; i < 10; i++) {
       yield i;
@@ -22,16 +28,24 @@ class StreamPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Init strem");
-    Stream<int> myStream = Stream.fromFuture(getNumber());
-    print("Stream creado");
-    counter().listen((value) {
+    // print("Init strem");
+    // Stream<int> myStream = Stream.fromFuture(getNumber());
+    // print("Stream creado");
+
+    Timer.periodic(Duration(seconds: 2), (timer) {
+      myStreamController.add('Nuevo evento: ${DateTime.now()}');
+    });
+    myStreamController.stream.listen((value) {
       print("Valor del Stream");
       print(value);
     }, onDone: () {
       print("FINALIZADO");
     }, onError: (error) {
       print("ERRRRORRRRR");
+    });
+
+    Future.delayed(Duration(seconds: 10), () {
+      myStreamController.close();
     });
     // //OBTENCIÓN DE VALOR EN FUTURE
     // getNumber().then((value) {
@@ -47,30 +61,57 @@ class StreamPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Stream Page"),
       ),
-
-      body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection("products").snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                  itemCount: snapshot.data!.docs.length,
-                  itemBuilder: (context, index) {
-                    DocumentSnapshot doc = snapshot.data!.docs[index];
-                    return Container(
-                      alignment: Alignment.center,
-                      height: 30,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.blueAccent),
-                      child: Text(doc["name"]),
-                    );
-                  });
-            } else {
-              return Text("No data");
-            }
-          }),
-      //STREAM BUILDER
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          myIntStreamController.add(myCounter);
+          myCounter++;
+        },
+        child: Text("Emitir"),
+      ),
+      body: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          StreamBuilder(
+            stream: myIntStreamController.stream,
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                return Text(
+                  snapshot.data.toString(),
+                  style: TextStyle(fontSize: 40),
+                );
+              }
+              return Text(
+                "0",
+                style: TextStyle(fontSize: 40),
+              );
+            },
+          ),
+        ],
+      )),
+      // body: StreamBuilder(
+      //     stream: FirebaseFirestore.instance.collection("products").snapshots(),
+      //     builder: (context, snapshot) {
+      //       if (snapshot.hasData) {
+      //         return ListView.builder(
+      //             itemCount: snapshot.data!.docs.length,
+      //             itemBuilder: (context, index) {
+      //               DocumentSnapshot doc = snapshot.data!.docs[index];
+      //               return Container(
+      //                 alignment: Alignment.center,
+      //                 height: 30,
+      //                 width: MediaQuery.of(context).size.width,
+      //                 decoration: BoxDecoration(
+      //                     borderRadius: BorderRadius.circular(20),
+      //                     color: Colors.blueAccent),
+      //                 child: Text(doc["name"]),
+      //               );
+      //             });
+      //       } else {
+      //         return Text("No data");
+      //       }
+      //     }),
+      // STREAM BUILDER
       // body: StreamBuilder(
       //   stream: counter(),
       //   builder: (BuildContext context, AsyncSnapshot snapshot) {
