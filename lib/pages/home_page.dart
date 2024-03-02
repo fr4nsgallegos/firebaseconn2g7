@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebaseconn2g7/pages/stream_page.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatelessWidget {
   CollectionReference productReference =
       FirebaseFirestore.instance.collection("products");
 
+  Logger _logger = Logger();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

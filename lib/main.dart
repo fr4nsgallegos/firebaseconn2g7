@@ -14,7 +14,7 @@ void main() async {
   );
   runApp(
     MaterialApp(
-      home: MapPage(),
+      home: MapsPage(),
       debugShowCheckedModeBanner: false,
     ),
   );
