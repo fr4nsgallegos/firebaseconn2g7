@@ -1,3 +1,4 @@
+import 'package:firebaseconn2g7/utils/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:logger/logger.dart';
@@ -10,6 +11,7 @@ class MapsPage extends StatefulWidget {
 }
 
 class _MapsPageState extends State<MapsPage> {
+  final _mapController = HomeController();
   Set<Marker> _markers = {};
   Logger _logger = Logger();
 
@@ -24,6 +26,7 @@ class _MapsPageState extends State<MapsPage> {
         backgroundColor: Colors.blueAccent,
       ),
       body: GoogleMap(
+        onMapCreated: _mapController.onMapCreated,
         onTap: (LatLng position) {
           print("lat: ${position.latitude}, long: ${position.longitude}");
           setState(() {
