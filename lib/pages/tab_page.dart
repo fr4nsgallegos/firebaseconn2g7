@@ -24,8 +24,8 @@ class _TabPageState extends State<TabPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.red,
-        buttonBackgroundColor: Colors.amber,
+        backgroundColor: pageDetails[_activeIndex]['navvigationBarColor'],
+        buttonBackgroundColor: pageDetails[_activeIndex]['botton_color'],
         onTap: (index) {
           _activeIndex = index;
           setState(() {});
@@ -37,7 +37,10 @@ class _TabPageState extends State<TabPage> {
         ],
       ),
       appBar: AppBar(
-        title: Text("TAB BAR"),
+        backgroundColor: pageDetails[_activeIndex]["navvigationBarColor"],
+        title: Text(
+          pageDetails[_activeIndex]["title"],
+        ),
         centerTitle: true,
       ),
       body: pageDetails[_activeIndex]["pageName"],
