@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebaseconn2g7/firebase_options.dart';
+import 'package:firebaseconn2g7/pages/candidate_page.dart';
 import 'package:firebaseconn2g7/pages/create_account_page.dart';
 import 'package:firebaseconn2g7/pages/home_page.dart';
 import 'package:firebaseconn2g7/pages/map_page.dart';
@@ -15,7 +16,7 @@ void main() async {
   );
   runApp(
     MaterialApp(
-      home: TabPage(),
+      home: CandidatePage(),
       debugShowCheckedModeBanner: false,
     ),
   );
