@@ -5,6 +5,7 @@ import 'package:firebaseconn2g7/pages/home_page.dart';
 import 'package:firebaseconn2g7/pages/map_page.dart';
 import 'package:firebaseconn2g7/pages/stream_page.dart';
 import 'package:firebaseconn2g7/pages/stream_page_marcial.dart';
+import 'package:firebaseconn2g7/pages/tab_page.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -14,7 +15,7 @@ void main() async {
   );
   runApp(
     MaterialApp(
-      home: MapsPage(),
+      home: TabPage(),
       debugShowCheckedModeBanner: false,
     ),
   );
