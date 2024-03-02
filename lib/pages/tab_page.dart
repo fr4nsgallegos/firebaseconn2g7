@@ -2,6 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebaseconn2g7/pages/home_page.dart';
 import 'package:firebaseconn2g7/pages/map_page.dart';
 import 'package:firebaseconn2g7/pages/stream_page.dart';
+import 'package:firebaseconn2g7/utils/tab_map.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -13,16 +14,18 @@ class TabPage extends StatefulWidget {
 class _TabPageState extends State<TabPage> {
   int _activeIndex = 0;
 
-  List<Widget> pages = [
-    HomePage(),
-    MapsPage(),
-    StreamPage(),
-  ];
+  // List<Widget> pages = [
+  //   HomePage(),
+  //   MapsPage(),
+  //   StreamPage(),
+  // ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Colors.red,
+        buttonBackgroundColor: Colors.amber,
         onTap: (index) {
           _activeIndex = index;
           setState(() {});
@@ -37,7 +40,7 @@ class _TabPageState extends State<TabPage> {
         title: Text("TAB BAR"),
         centerTitle: true,
       ),
-      body: pages[_activeIndex],
+      body: pageDetails[_activeIndex]["pageName"],
     );
   }
 }

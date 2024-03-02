@@ -5,6 +5,8 @@ import 'package:logger/logger.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatelessWidget {
+  Color backgroundColor;
+  HomePage({required this.backgroundColor});
   CollectionReference productReference =
       FirebaseFirestore.instance.collection("products");
 
@@ -12,7 +14,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: backgroundColor,
+      // appBar: AppBar(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -37,7 +40,8 @@ class HomePage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => StreamPage(),
+                    builder: (context) =>
+                        StreamPage(backgroundColor: Colors.white),
                   ),
                 );
               },
