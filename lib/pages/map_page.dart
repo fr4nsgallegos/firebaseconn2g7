@@ -9,9 +9,19 @@ class MapPage extends StatelessWidget {
         title: Text("Map Page"),
       ),
       body: GoogleMap(
+        onTap: (LatLng position) {
+          print(position);
+        },
         initialCameraPosition: CameraPosition(
           target: LatLng(-6.679630, -78.518984),
+          zoom: 18,
         ),
+        markers: {
+          // Marker(
+          //   markerId: MarkerId("primerMarcador"),
+          //   position: LatLng(-6.679630, -78.518984),
+          // )
+        },
       ),
     );
   }
