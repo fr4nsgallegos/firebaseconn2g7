@@ -2,7 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebaseconn2g7/widgets/candidate_card.dart';
 import 'package:flutter/material.dart';
 
-class CandidatePage extends StatelessWidget {
+class CandidatePage extends StatefulWidget {
+  @override
+  State<CandidatePage> createState() => _CandidatePageState();
+}
+
+class _CandidatePageState extends State<CandidatePage> {
   CollectionReference candidateReference =
       FirebaseFirestore.instance.collection("partidosPolíticos");
 
@@ -23,10 +28,11 @@ class CandidatePage extends StatelessWidget {
               itemCount: docs.length,
               itemBuilder: (BuildContext context, int index) {
                 return CandidateCard(
+                  docKey: docs[index].id,
                   candidato: docs[index]["nombreCandidato"],
                   image: docs[index]["image"],
                   partido: docs[index]["partidoPolitico"],
-                  votos: docs[index]["nvotos"].toString(),
+                  votos: docs[index]["nvotos"],
                 );
               },
             );
