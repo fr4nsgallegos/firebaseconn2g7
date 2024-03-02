@@ -29,7 +29,12 @@ class _CandidateCardState extends State<CandidateCard> {
       onTap: () {
         candidateReference
             .doc(widget.docKey)
-            .update({"nvotos": widget.votos + 1});
+            .update({"nvotos": widget.votos++});
+        candidateReference.doc(widget.docKey).get().then(
+          (value) {
+            print(value.data());
+          },
+        );
         setState(() {});
       },
       child: Card(

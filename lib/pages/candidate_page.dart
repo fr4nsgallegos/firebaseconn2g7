@@ -27,6 +27,7 @@ class _CandidatePageState extends State<CandidatePage> {
             return ListView.builder(
               itemCount: docs.length,
               itemBuilder: (BuildContext context, int index) {
+                // Object? myDoc = docs[index].data();
                 return CandidateCard(
                   docKey: docs[index].id,
                   candidato: docs[index]["nombreCandidato"],
