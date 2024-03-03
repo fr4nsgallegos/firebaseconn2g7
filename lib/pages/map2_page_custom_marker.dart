@@ -30,6 +30,8 @@ class _Map2PageState extends State<Map2Page> {
         onTap: () {
           _customInfoWindowController.addInfoWindow!(
             Container(
+              width: 200,
+              height: 300,
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: Colors.black,
@@ -39,16 +41,25 @@ class _Map2PageState extends State<Map2Page> {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
                     "Esta es la DIRECCIÓN",
+                    softWrap: true,
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.white,
                     ),
                   ),
                   Spacer(),
-                  Text("Este es el punto de partido, traer agua")
+                  Text(
+                    "Este es el punto de partido, traer agua",
+                    softWrap: true,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -100,6 +111,18 @@ class _Map2PageState extends State<Map2Page> {
               zoom: 17,
             ),
             markers: _markers,
+            onTap: (LatLng position) {
+              _customInfoWindowController.hideInfoWindow!();
+            },
+            onCameraMove: (position) {
+              _customInfoWindowController.onCameraMove!();
+            },
+          ),
+          CustomInfoWindow(
+            controller: _customInfoWindowController,
+            width: 200,
+            height: 100,
+            offset: 35,
           ),
         ],
       ),
