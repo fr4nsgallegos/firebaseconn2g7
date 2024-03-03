@@ -73,6 +73,45 @@ class _Map2PageState extends State<Map2Page> {
         markerId: MarkerId("2"),
         position: pos2,
         icon: designBit2,
+        onTap: () {
+          _customInfoWindowController.addInfoWindow!(
+            Container(
+              width: 200,
+              height: 300,
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.black,
+                border: Border.all(
+                  color: Colors.white,
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "Esta es la DIRECCIÓN",
+                    softWrap: true,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    "Este es el punto de partido, traer agua",
+                    softWrap: true,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            pos2,
+          );
+        },
       ),
     );
     auxMarkers.add(
@@ -80,6 +119,45 @@ class _Map2PageState extends State<Map2Page> {
         markerId: MarkerId("3"),
         position: pos3,
         icon: designBit3,
+        onTap: () {
+          _customInfoWindowController.addInfoWindow!(
+            Container(
+              width: 200,
+              height: 300,
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.black,
+                border: Border.all(
+                  color: Colors.white,
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "Esta es la DIRECCIÓN",
+                    softWrap: true,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    "Este es el punto de partido, traer agua",
+                    softWrap: true,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            pos3,
+          );
+        },
       ),
     );
     setState(() {
@@ -122,7 +200,7 @@ class _Map2PageState extends State<Map2Page> {
             controller: _customInfoWindowController,
             width: 200,
             height: 100,
-            offset: 35,
+            offset: 60,
           ),
         ],
       ),
